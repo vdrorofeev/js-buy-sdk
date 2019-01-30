@@ -3,6 +3,10 @@ export default function fetchResourcesForProducts(productOrProduct, client) {
 
   return Promise.all(products.reduce((promiseAcc, product) => {
     // Fetch the rest of the images and variants for this product
+    if (product == null) {
+      return promiseAcc
+    }
+
     promiseAcc.push(client.fetchAllPages(product.images, {pageSize: 250}).then((images) => {
       product.attrs.images = images;
     }));
